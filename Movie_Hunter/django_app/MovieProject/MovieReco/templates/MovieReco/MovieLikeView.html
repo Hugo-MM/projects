@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>MovieHunter - Sentiment</title>{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+
+    <div class="row top-buffer">
+    <table>
+          <tr>
+            <td>
+              {% if previous_rate %}
+                <font size=6pt> <b style="font-size: 2rem;">You already gave a {{previous_rate.rate}} to this movie, do you want to update this rating ? </b></font size=6pt></td>
+              {% else %}
+                <font size=6pt> <b style="font-size: 2rem;">My personnal sentiment about '{{movie.title}}' </b></font size=6pt>
+              {% endif %}
+            </td>
+          </tr>
+        </table>
+  </div>
+  <br>
+    <div class="row" style="list-style:none">
+        <p><form action="{% url 'MovieReco:MovieLikeView' movie_id %}" method="post" style="list-style-type: none;">
+            {% csrf_token %}
+            {{ form }}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input class="btn btn-primary" type="submit" value="take into account" />
+    </div>
+
+</div>
+{% endblock %}

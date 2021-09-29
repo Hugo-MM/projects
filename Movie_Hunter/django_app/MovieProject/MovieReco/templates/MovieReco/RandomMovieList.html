@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>MovieHunter - random movie list</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="row top-buffer">
+      <div class=col>
+      </div>
+    </div>
+
+  <table class="table table-responsive">
+        <tr>
+          <th> <p>Movie title</th>
+          <th> <p>imdb Rating</th>
+          <th> <p>genre</th>
+          <th> <p>director</th>
+          <th> <p> what do you think ?</th>
+        </tr>
+        {% for movie in movies %}
+        <tr>
+            <td><a href="{%url 'MovieReco:MovieView' movie.id %}">{{ movie.title}}</td>
+            <td>{{ movie.imdb_rate}}/10</td>
+            <td>
+              {% for genre in movie.genre.all %}
+                {{ genre.name }}
+              {% endfor %}
+            </td>
+            <td>
+              {% for director in movie.director.all %}
+                {{ director.last_name }}
+              {% endfor %}
+            </td>
+            <td>
+              <p><a href="{%url 'MovieReco:MovieLikeView' movie.id %}">rate this movie</a></p>
+            </td>
+        </tr>
+        {% endfor %}
+  </table>
+
+  <nav>
+    <ul class="pager">
+      {% if movies.has_previous %}
+          <li><a href="?page={{ movies.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      {% if movies.has_next %}
+          <li><a href="?page={{ movies.next_page_number }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+{% endblock %}

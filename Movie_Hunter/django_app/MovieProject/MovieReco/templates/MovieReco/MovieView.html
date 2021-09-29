@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>MovieHunter - movie</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="row top-buffer">
+      <div class=col>
+        <h2>{{ movie.title}} ({{ movie.year}})</h2>
+      </div>
+    </div>
+
+<table class="table table-responsive">
+        <tr>
+          <th> <p>popular rating (IMDB)</th>
+          <th> <p>duration (minutes)</th>
+          <th> <p>language</th>
+          <th> <p>genre</th>
+          <th> <p>director</th>
+          <th> <p>writer</th>
+          <th> <p>actors</th>
+        </tr>
+        <tr>
+            <td>{{ movie.imdb_rate}}/10</td>
+            <td>{{ movie.duration}}</td>
+            <td>
+              {% for language in movie.language.all %}
+                {{language.name}}<br>
+              {% endfor %}
+            </td>
+            <td>
+              {% for genre in movie.genre.all %}
+                {{genre.name}}<br>
+              {% endfor %}
+            </td>
+            <td>
+              {% for director in movie.director.all %}
+                {{ director.first_name}} {{ director.last_name}}<br>
+              {% endfor %}
+            </td>
+            <td>
+              {% for writer in movie.writer.all %}
+                {{ writer.first_name}} {{ writer.last_name}}<br>
+              {% endfor %}
+            </td>
+            <td>
+              {% for actor in movie.actor.all %}
+                {{ actor.first_name}} {{ actor.last_name}}<br>
+              {% endfor %}
+            </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Synopsis</h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>{{ movie.synopsys }}</p>
+          </td>
+        </tr>
+  </table>
+  <h4><a href="{%url 'MovieReco:MovieLikeView' movie.id %}">Rate this movie</a></h4>
+  <h4><a href= "https://www.imdb.com/title/{{movie.imdbid}}">more info from IMDb</a></h4>
+
+
+{% endblock %}

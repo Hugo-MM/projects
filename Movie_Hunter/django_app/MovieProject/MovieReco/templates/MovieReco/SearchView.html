@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>MovieHunter - search</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="col-lg-12 detail-separator">
+
+<table class="table table-responsive">
+  <form class="col-md-6 col-md-offset-3 text-center" action="{% url 'MovieReco:SearchMovie' %}" method="get" accept-charset="utf-8">
+    <div class="form-group">
+      <label for="searchForm"></label>
+      <input id="searchForm" class="form-control"  name="lookformovies">
+    </div>
+    <span class="help-block" id="helpBlock">Look for any movie by typing a title, a director, an actor, a writer </span>
+  </form>
+</table>
+
+{% if search_title != None %}
+<table class="table table-responsive">
+  <tr><p> {{ search_title }}
+  <tr>
+    <th> <p>Movie title</th>
+    <th> <p>imdb Rating</th>
+    <th> <p>genre</th>
+    <th> <p>director</th>
+    <th> <p> what do you think ?</th>
+  </tr>
+  {% for movie in movies %}
+  <tr>
+      <td><a href="{%url 'MovieReco:MovieView' movie.id %}">{{ movie.title}}</td>
+      <td>{{ movie.imdb_rate}}/10</td>
+      <td>
+        {% for genre in movie.genre.all %}
+          {{ genre.name }}
+        {% endfor %}
+      </td>
+      <td>
+        {% for director in movie.director.all %}
+          {{ director.last_name }}
+        {% endfor %}
+      </td>
+      <td>
+        <p><a href="{%url 'MovieReco:MovieLikeView' movie.id %}">rate this movie</a></p>
+      </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endif %}
+
+
+{% endblock %}

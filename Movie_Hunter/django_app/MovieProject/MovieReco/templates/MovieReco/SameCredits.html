@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>MovieHunter - movie</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="row top-buffer">
+      <div class=col>
+        <h3>10 closest movies for {{ movie.title}} ({{ movie.year}})</h3>
+      </div>
+    </div>
+
+<table class="table table-responsive">
+  <tr>
+    <th> <p>movie</th>
+    <th> <p>popular rating (IMDB)</th>
+    <th> <p>duration (minutes)</th>
+    <th> <p>genre</th>
+    <th> <p>synopsys</th>
+  </tr>
+  {% for reco in reco_movies %}
+  <tr>
+    <td><a href="{%url 'MovieReco:MovieView' reco.id %}">{{reco.title}}</a></td>
+    <td>{{ reco.imdb_rate }}/10</td>
+    <td>{{ reco.duration }}</td>
+    <td>
+      {% for genre in reco.genre.all %}
+        {{genre.name}}<br>
+      {% endfor %}
+    </td>
+    <td>{{ reco.synopsys }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

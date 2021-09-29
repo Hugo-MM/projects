@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Movie Hunter - new user</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+
+  <h4>Just the minimum for you and us to remember what movies you like.</h4>
+
+  <form role="form" action="{% url 'MovieReco:CreateUser' %}" method="post" class="needs-validation" novalidate id="user-creation-form">
+    {% csrf_token %}
+    {% for hidden_field in form.hidden_fields %}
+      {{ hidden_field.errors }}
+      {{ hidden_field }}
+    {% endfor %}
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="username-field" class="control-label">login (no white space)<span class="required">*</span></label>
+        <input class="form-control ctrl-username" id="username-field" name="username" type="text" placeholder="wes_anderson" data-error="field required !" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="password1-field" class="control-label">Password <span class="required">*</span></label>
+        <input class="form-control" id="password1-field" name="password1" type="password" required />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="password2-field" class="control-label">Password confirmation <span class="required">*</span></label>
+        <input class="form-control ctrl-same" id="password2-field" name="password2" type="password" required data-ctrl-same="password1-field" />
+      </div>
+    </div>
+
+      <div class="form-group col-md-4" id="accountcreation">
+        <input class="btn btn-primary disabler" type="submit" value="Let's go !" />
+      </div>
+
+  </form>
+</div>
+
+
+{% endblock %}
